@@ -101,3 +101,70 @@ Step 5: 记录到 MEMORY.md + 02_RUNTIME_INDEX_LOG.md
 
 > 完整协议细则见 Nova 的 01_BUSINESS_CONFIG.md §7.5
 > 完整协议细则见 `NovaShared/.comm/README.md`
+
+---
+
+## 七、输出文件规则
+
+### 7.1 默认格式
+- 文档类 → `.docx`（Word格式）
+- 表单/数据类 → `.xlsx`（Excel格式）
+- 不再输出 `.md` 作为最终交付物
+
+### 7.2 三步输出规则
+每次输出文件到自身 `output/` 后：
+| # | 动作 | 路径 | 说明 |
+|:-:|:----|:----|:----|
+| ① | 生成文件 | `workspace-drama/output/` | 本体 |
+| ② | 同步拷贝 | `/mnt/hgfs/NovaShared/Drama/OutPut/` | 共享镜像 |
+| ③ | 微信发送 | 用 `MEDIA:` | 仅限 channel=openclaw-weixin 时触发 |
+
+### 7.3 Git 同步配置
+**仓库：** `git@drama.github.com:Hanzb1986/DramaLib.git`（deploy key: `~/.ssh/drama-deploy`）
+
+**何时 commit & push：**
+- 处理完 input/ 新文件后
+- 更新 memory 文件后
+- 任何重要的配置变更后
+
+命令模式：
+```bash
+cd /home/hans/.openclaw/workspace-drama
+git add -A
+git commit -m "<scope>: <brief description>"
+git push
+```
+
+---
+
+## 八、智能体通话机制补充
+
+### 8.1 发消息规则
+- 写到收件人 `to_xxx/` 目录
+- 文件名 `from_Drama_{YYYY-MM-DD_HHMM}.md`
+- 使用 YAML front-matter
+- 紧急消息前缀 `_URGENT`
+
+### 8.2 心跳巡检
+每次心跳/巡检检查收件箱，间隔不超过 1 小时。
+
+---
+
+## 九、记忆管理规范
+
+### 9.1 记忆分层
+| 层级 | 存储位置 | 时效 |
+|:----|:--------|:----|
+| 长期 | `MEMORY.md` + `memory/entities/` | 永久 |
+| 短期 | `memory/YYYY-MM-DD.md`（当日日志） | 按日期归档 |
+| 不入库 | 不写入 | 闲聊/语气/用户标注「不用记」 |
+
+### 9.2 记忆冲突处理
+新指令与已有记忆相悖 → 暂停任务，展示冲突信息，等待 Hans 裁决。
+
+---
+
+## 十、自动任务补充
+
+### 10.1 自动工作节奏
+聊天结束 → 自动开工（一项接一项）。聊天中给的任务优先处理。有疑问记入 `memory/pending-questions.md`。
