@@ -19,6 +19,7 @@
 | 07-06 | 10:04 | 确认实际挂载点为 `/mnt/hgfs/ElliShared/`，全量路径修正 `NovaShared` → `ElliShared`（6 个文件） |
 | 07-06 | 10:05 | 清理 `.comm` 依赖——`sessions_send` 已全覆盖，无需文件通信 |
 | 07-06 | 10:10 | 技能迁移通知 Nova（lh-video-gen / lh-edge-tts Ellie→Drama） |
+| 07-06 | 10:14 | Git 全量推送 + 自动同步机制就绪（post-commit hook + 30min cron） |
 
 ---
 
