@@ -22,6 +22,7 @@
 | 07-06 | 10:14 | Git 全量推送 + 自动同步机制就绪（post-commit hook + 30min cron） |
 | 07-06 | 10:16 | L2 追加 §十五（派工标准化格式）+ §十六（5类标准化告警）Nova 指令 |
 | 07-06 | 10:18 | L2 追加 §十七（跨 Agent 工作区边界规则）Hans 新定 |
+| 07-06 | 10:20 | 技能新增：browser-automation（从 plugin-skills 复制到 ~/.openclaw/skills/ + openclaw.json 配置） |
 
 ---
 
