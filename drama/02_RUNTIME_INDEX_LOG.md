@@ -20,6 +20,8 @@
 | 07-06 | 10:05 | 清理 `.comm` 依赖——`sessions_send` 已全覆盖，无需文件通信 |
 | 07-06 | 10:10 | 技能迁移通知 Nova（lh-video-gen / lh-edge-tts Ellie→Drama） |
 | 07-06 | 10:14 | Git 全量推送 + 自动同步机制就绪（post-commit hook + 30min cron） |
+| 07-06 | 10:16 | L2 追加 §十五（派工标准化格式）+ §十六（5类标准化告警）Nova 指令 |
+| 07-06 | 10:18 | L2 追加 §十七（跨 Agent 工作区边界规则）Hans 新定 |
 
 ---
 
