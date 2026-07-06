@@ -455,4 +455,61 @@ sessions_send(
 **仅可自行的操作：**
 - 日常日志/记忆更新
 - `02_RUNTIME_INDEX_LOG.md` 事件记录
+- `drama/memory/config-checklist.md` 配置留痕
+- `drama/memory/pending-questions.md` 疑问记录
 - 产出文件的生成与同步
+
+---
+
+## 🔴 十八、2026-07-06 全面自检修正包（Hans 授权执行，永久规则）
+
+> 本包修正 2026-07-06 13:00 自检报告（TASK-20260706-SELFCHECK-DRAMA）发现的全部问题。
+
+### 18.1 记忆层级实际定义（对齐修正）
+
+**问题：** L1 §6.2 将 `02_RUNTIME_INDEX_LOG.md` 标注为「短期记忆」，L2 §十一 将 `drama/memory/YYYY-MM-DD.md` 标注为「临时记忆」，两者概念冲突。
+
+**修正声明：** 三层文档的实际记忆层级定义以 L2 §十一 为准：
+
+| 层级 | 实际文件 | 职责 |
+|:----|:--------|:----|
+| **长期记忆** | `MEMORY.md` + `drama/memory/entities/` | 全局规则、跨会话常识、智能体实体 |
+| **临时记忆（每日日志）** | `drama/memory/YYYY-MM-DD.md` | 当日事件、决策、学习 |
+| **事件日志（L3）** | `02_RUNTIME_INDEX_LOG.md` | 时间线索引，非记忆存储 |
+| **配置留痕** | `drama/memory/config-checklist.md` | 配置变更记录（L1 §7.5 要求） |
+| **待确认事项** | `drama/memory/pending-questions.md` | 未决问题暂存（L2 §10.1 要求） |
+
+> L1 §6.2 的「短期记忆」标注存在过时，待 Hans 下次授权 L1 修改时对齐。
+
+### 18.2 通信通道优先级
+
+**问题：** §六 将 .comm 文件总线描述为活动通道（session 启动必检），但 §十二.3 说它是「备用通道」，L3 日志称「已清理」。
+
+**修正声明：**
+
+```
+主通道：sessions_send（实时，优先使用）
+备用通道：.comm 文件总线（故障降级，恢复运行于 2026-07-06 13:18）
+```
+
+- §六 启动检查流程仅在 sessions_send 不可用时触发
+- 常规状态下，Drama 不主动检查 .comm 收件箱
+- `.comm/README.md` 已写入 `ElliShared/.comm/` 供查阅
+
+### 18.3 §五 技能清单附注
+
+§五 技能表保持历史记录不变（L2 只加不改），但实际技能清单以 `openclaw.json` 为准：
+
+| 技能名 | 配置名 | 状态 |
+|:-------|:------|:----|
+| lh-video-gen | lh-video-gen | ✅ |
+| lh-edge-tts | lh-edge-tts | ✅ |
+| edge-tts（内置） | edge-tts | ✅ |
+| browser-automation | browser-automation | ✅ 2026-07-06 新增 |
+| yixiaoer-publish | yixiaoer（配置名待对齐） | ⏳ 等 Hans 处理 |
+| web-search | web-search | ✅ |
+
+### 18.4 `MEDIA:` 指令说明
+
+§7.2 ③ 中 `MEDIA:` 为遗留格式。当前我们在 WebChat 渠道运行，不触发该步骤。
+如未来启用 `channel=openclaw-weixin`，届时由 Nova 统一调整此规则。
