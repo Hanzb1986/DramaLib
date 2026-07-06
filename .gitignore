@@ -2,6 +2,9 @@
 input/
 output/
 
+# 技能目录（本地 symlink 到系统级 ~/.openclaw/skills/，不提交）
+skills/
+
 # OS files
 .DS_Store
 Thumbs.db

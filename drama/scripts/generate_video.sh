@@ -6,7 +6,11 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 WORKSPACE="$(cd "$SCRIPT_DIR/.." && pwd)"
-GEN_SCRIPT="$WORKSPACE/../skills/lh-video-gen/scripts/generate.py"
+# ⚠️ lh-video-gen skill 尚未安装。此脚本为占位模板。
+# 技能安装后，将 GEN_SCRIPT 改为技能实际入口路径。
+# 当前路径验证：
+SKILL_DIR="$WORKSPACE/../skills/lh-video-gen"
+GEN_SCRIPT="$SKILL_DIR/scripts/generate.py"
 
 SCRIPT_PATH="${1:-}"
 OUTPUT="${2:-$WORKSPACE/output/video_$(date +%Y%m%d_%H%M%S).mp4}"
@@ -18,6 +22,12 @@ fi
 
 if [ ! -f "$SCRIPT_PATH" ]; then
   echo "❌ 脚本文件不存在: $SCRIPT_PATH"
+  exit 1
+fi
+
+if [ ! -f "$GEN_SCRIPT" ]; then
+  echo "❌ lh-video-gen 未安装。请 Hans 先安装 lh-video-gen skill。"
+  echo "   期望路径: $GEN_SCRIPT"
   exit 1
 fi
 
@@ -40,7 +50,7 @@ echo "📊 文件大小: $(du -h "$OUTPUT" | cut -f1)"
 echo "📐 分辨率: 1080×1920 (9:16)"
 
 # 同步到共享目录
-SHARE_DIR="/mnt/hgfs/NovaShared/OutPut/drama/"
+SHARE_DIR="/mnt/hgfs/ElliShared/Drama/OutPut/"
 if [ -d "$SHARE_DIR" ]; then
   mkdir -p "$SHARE_DIR"
   cp "$OUTPUT" "$SHARE_DIR/"

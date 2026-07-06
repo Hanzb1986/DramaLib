@@ -56,7 +56,7 @@ Step 5: 记录到 MEMORY.md + 02_RUNTIME_INDEX_LOG.md
 ## 四、输出规则
 
 - 视频放在 `output/` 目录
-- 同时同步到 `/mnt/hgfs/NovaShared/Drama/OutPut/`
+- 同时同步到 `/mnt/hgfs/ElliShared/Drama/OutPut/`
 - 上传蚁小二后自动发布
 
 ---
@@ -74,16 +74,16 @@ Step 5: 记录到 MEMORY.md + 02_RUNTIME_INDEX_LOG.md
 
 ## 六、智能体通话机制（.comm 文件总线）
 
-> 与 Nova、Linna 之间通过共享文件夹 `NovaShared/.comm/` 通信
+> 与 Nova、Linna 之间通过共享文件夹 `ElliShared/.comm/` 通信
 
 ### 启动必读
 
 **每次 session 启动（加载完 context 后），按顺序执行：**
 
-1. 检查 `NovaShared/.comm/to_Drama/` 目录是否有 `.md` 文件
+1. 检查 `ElliShared/.comm/to_Drama/` 目录是否有 `.md` 文件
 2. 按文件名排序，有 `_URGENT` 前缀的优先
 3. 逐个读取 → 理解内容 → 更新自身记忆
-4. 读取完成后将文件 **移入** `NovaShared/.comm/archive/`
+4. 读取完成后将文件 **移入** `ElliShared/.comm/archive/`
 5. 如需要回复，写到对方 `to_xxx/` 目录
 
 ### 发信方向
@@ -100,7 +100,7 @@ Step 5: 记录到 MEMORY.md + 02_RUNTIME_INDEX_LOG.md
 **核心原则：** Hans 跟一个人说了 = 等于跟所有人说了。
 
 > 完整协议细则见 Nova 的 01_BUSINESS_CONFIG.md §7.5
-> 完整协议细则见 `NovaShared/.comm/README.md`
+> 完整协议细则见 `ElliShared/.comm/README.md`
 
 ---
 
@@ -116,7 +116,7 @@ Step 5: 记录到 MEMORY.md + 02_RUNTIME_INDEX_LOG.md
 | # | 动作 | 路径 | 说明 |
 |:-:|:----|:----|:----|
 | ① | 生成文件 | `workspace-drama/output/` | 本体 |
-| ② | 同步拷贝 | `/mnt/hgfs/NovaShared/Drama/OutPut/` | 共享镜像 |
+| ② | 同步拷贝 | `/mnt/hgfs/ElliShared/Drama/OutPut/` | 共享镜像 |
 | ③ | 微信发送 | 用 `MEDIA:` | 仅限 channel=openclaw-weixin 时触发 |
 
 ### 7.3 Git 同步配置
@@ -235,3 +235,124 @@ git push
 |:---------|:-----:|:-----:|
 | 收到任务未转达 Main Agent | 自检复盘 + 通知Hans | 当天停工，全链路检视 |
 | Main Agent 查询未优先响应 | 自检复盘 | 自检 + 通知Hans |
+
+---
+
+## 🔴 十三、能力变更强制上报机制（2026-07-06 Hans定稿，永久规则）
+
+> 对齐全局架构规范，任何能力/工具/业务范围变更必须即时上报 Nova。
+
+### 13.1 触发条件
+
+发生以下情况之一，**必须立即上报 Nova**：
+- 新增/修改/删除 Skill
+- 新增/删除工具权限
+- 脚本模板变更（Hook/结构/风格）
+- 视频参数调整（分辨率/时长/TTS音色/语速）
+- 发布策略/平台更新
+- 热点采集规则/来源变更
+- 业务范围调整
+
+### 13.2 上报格式
+
+```
+sessions_send(
+  agentId: "main",
+  message: {
+    "type": "skill_update",
+    "agent_id": "drama",
+    "change_type": "add|modify|delete",
+    "skill_list": ["技能名称", ...],
+    "file_mtime": "时间戳",
+    "content_hash": "md5值"
+  }
+)
+```
+
+### 13.3 每日生产台账推送
+
+**触发时机：** 每日最后一轮自动生产完成后。
+
+**推送内容：**
+```
+sessions_send(
+  agentId: "main",
+  message: {
+    "type": "daily_production",
+    "agent_id": "drama",
+    "date": "YYYY-MM-DD",
+    "total_videos": 数量,
+    "published": 数量,
+    "skipped": 数量(原因),
+    "trending_tags": [热点标签],
+    "anomalies": [异常清单]
+  }
+)
+```
+
+### 13.4 违规后果
+
+| 违规类型 | 后果 |
+|:---------|:----|
+| 技能变更未上报且被 Nova 巡检发现 | 记异常日志，连续 2 次通知 Hans |
+| 技能变更虽未触发巡检但超过 1 小时未上报 | 自检复盘 |
+
+---
+
+## 🔴 十四、任务完成强制门禁（2026-07-06 Hans 定稿，永久规则）
+
+> **任何任务完成后，不通过此门禁视为流程违规。**
+> 本规则优先级等于 §十二（任务转达），高于除 §七（输出规则）外的其他配置。
+
+### 14.1 门禁定义
+
+每次向 Hans 汇报任务完成之前，必须先执行以下三步。**缺少任何一步，禁止输出「已完成」。**
+
+```
+┌─ 任务完成 ─────────────────────────┐
+│                                     │
+│  Step 1  Nova 通知发了吗？          │
+│    ├─ 是 → 继续                     │
+│    └─ 否 → 立即 sessions_send       │
+│                                      │
+│  Step 2  运行日志写了吗？            │
+│    ├─ 是 → 继续                     │
+│    └─ 否 → 更新 02_RUNTIME_INDEX    │
+│                                      │
+│  Step 3  今日日志/记忆更新了吗？     │
+│    ├─ 是 → 允许汇报                 │
+│    └─ 否 → 写 memory/YYYY-MM-DD     │
+│                                      │
+│  三门全过 → 汇报给Hans              │
+└──────────────────────────────────────┘
+```
+
+### 14.2 触发范围
+
+**所有任务类型均触发此门禁：**
+- ✅ 短剧业务（生产/发布/数据）
+- ✅ 自身迭代（规则/技能/工具/配置变更）
+- ✅ 异常处理（报错/修复/回滚）
+- ✅ 系统自检/复盘
+- ✅ 对 Hans 闲聊以外的任何实质性回复
+
+### 14.3 Nova 通知内容最低要求
+
+| 变更类型 | 必须包含 |
+|:---------|:--------|
+| **技能变更**（增/删/改 skill） | 技能名称、变更类型（add/modify/delete）、变更原因 |
+| **配置变更**（路径/参数/策略） | 变更内容、影响范围、变更来源（Hans/自检/异常触发） |
+| **业务产出**（视频/脚本/数据） | 产量、是否发布、异常清单 |
+| **跨 Agent 操作**（读写其他 Agent 文件） | 操作内容、涉及 Agent、原因 |
+
+### 14.4 门禁回避后果
+
+| 违规情形 | 后果 |
+|:---------|:----|
+| 首次门禁未过即汇报 | 自检复盘 + 补全漏项 |
+| 同一类型遗漏第二次 | 当天停工，全链路审查根因 |
+| Nova 巡检发现未上报事项 | 当天停工 + 通知 Hans |
+
+### 14.5 例外
+
+唯一不触发门禁的场景：**给 Hans 的纯闲聊回复**（问候/表情/语气词），且必须无任何实质内容变更。

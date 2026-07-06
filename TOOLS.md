@@ -1,32 +1,44 @@
-# TOOLS.md - Drama 工作环境配置
+# TOOLS.md - Local Notes
 
-## 📂 目录结构
+Skills define _how_ tools work. This file is for _your_ specifics — the stuff that's unique to your setup.
 
-- `input/` — Hans 投递的素材/参考文件
-- `output/` — 生成的短剧脚本、视频成品
-- `memory/` — 记忆存储
-- `scripts/` — 辅助脚本
+## What Goes Here
 
-## 共享目录
+Things like:
 
-- 收文件：`/mnt/hgfs/NovaShared/Drama/Input/`
-- 发文件：`/mnt/hgfs/NovaShared/Drama/OutPut/`
-- 通信：`/mnt/hgfs/NovaShared/.comm/`
+- Camera names and locations
+- SSH hosts and aliases
+- Preferred voices for TTS
+- Speaker/room names
+- Device nicknames
+- Anything environment-specific
 
-## Git
+## Examples
 
-- 仓库：`git@drama.github.com:Hanzb1986/DramaLib.git`
-- Deploy key：`~/.ssh/drama-deploy`
+```markdown
+### Cameras
 
-## 技能
+- living-room → Main area, 180° wide angle
+- front-door → Entrance, motion-triggered
 
-已配置 skill：
-- `lh-video-gen` — 视频生成
-- `yixiaoer` — 多平台发布
-- `edge-tts` — 文本转语音
-- `lh-edge-tts` — 语音合成
-- `web-search` — 热点搜索
+### SSH
 
-## 发布平台
+- home-server → 192.168.1.100, user: admin
 
-通过蚁小二发布，配置见 openclaw.json。
+### TTS
+
+- Preferred voice: "Nova" (warm, slightly British)
+- Default speaker: Kitchen HomePod
+```
+
+## Why Separate?
+
+Skills are shared. Your setup is yours. Keeping them apart means you can update skills without losing your notes, and share skills without leaking your infrastructure.
+
+---
+
+Add whatever helps you do your job. This is your cheat sheet.
+
+## Related
+
+- [Agent workspace](/concepts/agent-workspace)
