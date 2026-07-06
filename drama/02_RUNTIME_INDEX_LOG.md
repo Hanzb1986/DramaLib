@@ -24,6 +24,7 @@
 | 07-06 | 10:18 | L2 追加 §十七（跨 Agent 工作区边界规则）Hans 新定 |
 | 07-06 | 10:20 | 技能新增：browser-automation（从 plugin-skills 复制到 ~/.openclaw/skills/ + openclaw.json 配置） |
 | 07-06 | 13:17 | §十八 自检修正包执行（config-checklist.md / pending-questions.md 创建，.comm 目录恢复，记忆层级澄清，通信优先级明确） |
+| 07-06 | 16:15 | 接收 Nova 统一规则《输入输出与共享文件夹统一规则》，确认与现有规则无冲突 |
 
 ---
 
