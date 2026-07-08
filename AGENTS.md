@@ -232,10 +232,7 @@ This is a starting point. Add your own conventions, style, and rules as you figu
 3. **高频模型调用禁令** — 纯机械操作（如 git push、文件同步、脚本执行等）禁止使用 agentTurn 调用大模型，只跑 shell 脚本
 
 ### 二、Drama 现有 cron 排期
-| 名称 | 表达式 | 说明 |
-|------|--------|------|
-| 🌅 drama-morning-production | `5 10 * * *` Asia/Shanghai | 早班生产 10:05 |
-| 🌙 drama-evening-production | `0 20 * * *` Asia/Shanghai | 晚班生产 20:00 |
+> 已由 Nova 统一接管（全 Agent 定时任务归 Nova 调度）
 
 ### 三、已占用时刻避让（全 Agent）
 - 07:55 — 任务节点巡检
