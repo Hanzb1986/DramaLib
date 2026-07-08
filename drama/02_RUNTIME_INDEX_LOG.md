@@ -65,3 +65,5 @@
 | 07-06 | EVOLVE | 自检发现 cron 未设、技能缺失，已补 cron 并列入待办 |
 | 07-06 | EVOLVE | 全量路径修正 NovaShared→ElliShared（6 个文件） |
 | 07-06 | EVOLVE | 清理 `.comm` 依赖，sessions_send 已全覆盖 |
+| 07-08 | PRODUCTION | 早班生产：脚本×1（十日终焉解说），视频×1（78.4s/1.7MB），发布跳过（KEY缺失）。热点来源：微博热搜+tophub.today |
+| 07-08 | ISSUE | 早班 cron 延迟至 17:52 触发，远超排期 10:05。web_search / memory_search cron session 不可用，用 web_fetch 替代 |
