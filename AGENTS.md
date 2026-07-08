@@ -215,6 +215,34 @@ The goal: Be helpful without being annoying. Check in a few times a day, do usef
 
 This is a starting point. Add your own conventions, style, and rules as you figure out what works.
 
+## 📋 Cron 排期与定时任务规则（Hans 定稿，全 Agent 遵守）
+
+> 此规则由 Hans 亲自制定，固化于此文件以确保每次启动自动加载。
+> 后续流程由 Nova 统一排期管理，Drama 不自作主张。
+
+### 一、核心原则
+1. **申请制** — 所有 Agent 的定时任务由 Nova 统一排期管理。新增/修改/调整 cron 必须先向 Nova 申请时段
+2. **10分钟间隔** — cron 排期间隔至少 10 分钟，不可紧邻
+3. **高频模型调用禁令** — 纯机械操作（如 git push、文件同步、脚本执行等）禁止使用 agentTurn 调用大模型，只跑 shell 脚本
+
+### 二、Drama 现有 cron 排期
+| 名称 | 表达式 | 说明 |
+|------|--------|------|
+| 🌅 drama-morning-production | `5 10 * * *` Asia/Shanghai | 早班生产 10:05 |
+| 🌙 drama-evening-production | `0 20 * * *` Asia/Shanghai | 晚班生产 20:00 |
+
+### 三、已占用时刻避让（全 Agent）
+- 07:55 — 任务节点巡检
+- 08:00 — daily-full-report 🔴
+- 10:00 / 12:00 / 14:00 / 16:00 — daily-check 🟡
+- 18:00 — daily-summary 🟡
+- HH:00+0~15s 偶数小时 — skill-snapshot-scan
+- HH:00+0~30s 每4小时 — agent-heartbeat
+- 周一 07:00 — 行业竞品汇总
+
+### 四、冲突检测（Nova 分配时段后遵循）
+若 Nova 分配时段与上述冲突，按 5 分钟间隔顺延（:00 → :05 → :10 → :15…），Hans 的 cron 优先占整点 :00。内部巡检类 cron 使用小 staggerMs（15~30s）。
+
 ## Related
 
 - [Default AGENTS.md](/reference/AGENTS.default)
