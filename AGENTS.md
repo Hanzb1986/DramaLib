@@ -215,6 +215,12 @@ The goal: Be helpful without being annoying. Check in a few times a day, do usef
 
 This is a starting point. Add your own conventions, style, and rules as you figure out what works.
 
+## 👥 人员别名区分（2026-07-08 更新）
+
+引用人名时注意区分：
+- **李蒙**（研发部）— 别名栏注「李萌（萌字）」
+- **李萌（电工）** — 新增，云湖电磁阀更换执行人，7/10前完成
+
 ## 📋 Cron 排期与定时任务规则（Hans 定稿，全 Agent 遵守）
 
 > 此规则由 Hans 亲自制定，固化于此文件以确保每次启动自动加载。
