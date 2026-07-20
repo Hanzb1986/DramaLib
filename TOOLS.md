@@ -39,6 +39,14 @@ Skills are shared. Your setup is yours. Keeping them apart means you can update 
 
 Add whatever helps you do your job. This is your cheat sheet.
 
+## 共享目录（NovaShared）
+
+> 所有 Agent 统一使用 `~/NovaShared/` 进行跨 Agent 文件交换。
+> 旧 VMWare 共享 `/mnt/hgfs/ElliShared/` 已废弃。
+
+- `~/NovaShared/Drama/` — 别人投递给我的文件
+- `~/NovaShared/OutPut/` — 最终输出目录（统一）
+
 ## Related
 
 - [Agent workspace](/concepts/agent-workspace)

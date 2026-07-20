@@ -14,9 +14,10 @@
 
 ## 共享目录
 
-- 收文件：`/mnt/hgfs/ElliShared/Drama/Input/`
-- 发文件：`/mnt/hgfs/ElliShared/Drama/OutPut/`
-- 通信：`/mnt/hgfs/ElliShared/.comm/`
+- 收文件（别人放）：`~/NovaShared/Drama/`
+- 发文件（统一输出）：`~/NovaShared/OutPut/`
+- 旧 VMWare 共享路径 `/mnt/hgfs/ElliShared/` 已废弃（2026-07）
+- 通信主通道：`sessions_send` → Nova；备用仍需通信时另行指定
 
 ## Git
 

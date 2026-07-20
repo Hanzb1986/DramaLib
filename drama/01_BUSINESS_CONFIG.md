@@ -53,9 +53,10 @@ Step 5: 记录到 MEMORY.md + 02_RUNTIME_INDEX_LOG.md
 
 ## 四、输出规则
 
-- 视频放在 `output/` 目录
-- 同时同步到 `/mnt/hgfs/ElliShared/Drama/OutPut/`
+- 视频放在 `output/` 目录（本地暂存）
+- 同时同步到 `~/NovaShared/OutPut/`（统一输出目录）
 - 上传蚁小二后自动发布
+- 旧路径 `/mnt/hgfs/ElliShared/` 已废弃（2026-07）
 
 ---
 
@@ -155,8 +156,8 @@ Skill 新增/修改/删除 → 立即上报 Nova。
 
 > 主通道为 sessions_send（实时优先）。.comm 仅作 sessions_send 不可用时的降级备用。
 
-**接收：** 检查 `ElliShared/.comm/to_Drama/` 目录 → 读文件 → 理解内容 → 更新记忆 → 归档。
-**发送：** 写到 `ElliShared/.comm/to_Nova/` 或 `to_Linna/` → 文件名 `from_Drama_{YYYY-MM-DD_HHMM}.md` → 紧急加前缀 `_URGENT`。
+**接收：** 检查 `~/NovaShared/.comm/to_Drama/` 目录 → 读文件 → 理解内容 → 更新记忆 → 归档。
+**发送：** 写到 `~/NovaShared/.comm/to_Nova/` 或 `~/NovaShared/.comm/to_Linna/` → 文件名 `from_Drama_{YYYY-MM-DD_HHMM}.md` → 紧急加前缀 `_URGENT`。
 
 ---
 
@@ -173,7 +174,7 @@ Skill 新增/修改/删除 → 立即上报 Nova。
 | # | 动作 | 路径 |
 |:-:|:----|:----|
 | ① | 生成文件 | `workspace-drama/output/` |
-| ② | 同步拷贝 | `/mnt/hgfs/ElliShared/Drama/OutPut/` |
+| ② | 同步拷贝 | `~/NovaShared/OutPut/` |
 | ③ | 微信发送 | `MEDIA:`（仅 channel=openclaw-weixin 时触发） |
 
 ---
